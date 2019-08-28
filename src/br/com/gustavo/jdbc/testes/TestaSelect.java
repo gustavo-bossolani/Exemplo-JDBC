@@ -16,15 +16,15 @@ public class TestaSelect {
 			Statement statement = conector.createStatement();
 			boolean resultado = statement.execute("select * from Produto");
 			System.out.println(resultado);
+			
 			ResultSet resultSet = statement.getResultSet();
-
+			
 			while (resultSet.next()) {
 				int id = resultSet.getInt("id");
 				String nome = resultSet.getString("nome");
 				String descricao = resultSet.getString("descricao");
 
 				System.out.println("id: " + id + " nome: " + nome + " descricao: " + descricao);
-
 			}
 
 			resultSet.close();

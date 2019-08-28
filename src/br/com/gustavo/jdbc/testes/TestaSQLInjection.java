@@ -29,8 +29,8 @@ public class TestaSQLInjection {
 		 */
 		
 		String sql = "insert into Produto(nome, descricao) values(?,?)";
-		String nome = "TV HD+ 45'";
-		String descricao = "TV ULTRA HD para assistir filmes em alta definição";
+		String nome = "Combo Playstation 3";
+		String descricao = "Video game PS3 com 3 jogos.";
 		PreparedStatement statementPreparado;
 
 		try {
@@ -46,18 +46,17 @@ public class TestaSQLInjection {
 				int linhasEditadas = statementPreparado.getUpdateCount();
 				System.out.println("Linhas alteradas " + linhasEditadas);
 				
-				
-			} else {
-				System.out.println("Selecionando Produtos na base de dados.");
-				ResultSet resultSet = statementPreparado.getResultSet();
-				while (resultSet.next()) {
-					System.out.println("id: " + resultSet.getInt("id") + " nome: " + resultSet.getString("nome")
-							+ " descricao: " + resultSet.getString("descricao"));
+				ResultSet resultSet =  statementPreparado.getGeneratedKeys();
+				while(resultSet.next()){
+					String id = resultSet.getString("id");
+					System.out.println(id + " gerado.");
 				}
-			}
+				resultSet.close();
+			} 
 
-			System.out.println();
-
+			statementPreparado.close();
+	        connection.close();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println(e.getMessage());

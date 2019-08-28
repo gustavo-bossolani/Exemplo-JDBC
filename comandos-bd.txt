@@ -1,0 +1,6 @@
+
+Código para rodar o banco
+java -cp hsqldb.jar org.hsqldb.server.Server --database.0 file:estudo-jdbc --dbname.0 loja-virtual
+
+Código para inicializar o db manager
+java -cp hsqldb.jar  org.hsqldb.util.DatabaseManager

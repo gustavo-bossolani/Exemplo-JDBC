@@ -14,7 +14,8 @@ public class TestaInsert {
 		try {
 			Connection con = Banco.getConnection();
 			Statement state = con.createStatement();
-			String sql = "insert into produto (nome, descricao) values ('Placa de Video','Uma poderosa placa de video para seus Games')";
+			String sql = 
+					"insert into produto (nome, descricao) values ('Geladeira','geladeira frost free.')";
 			
 			boolean retorno = state.execute(sql, Statement.RETURN_GENERATED_KEYS);
 			
