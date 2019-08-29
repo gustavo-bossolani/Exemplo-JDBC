@@ -5,14 +5,14 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import br.com.gustavo.jdbc.models.Banco;
+import br.com.gustavo.jdbc.models.BancoDataSource;
 
 public class TestaInsert {
 
 	public static void main(String[] args) {
 
 		try {
-			Connection con = Banco.getConnection();
+			Connection con = new BancoDataSource().getConnection();
 			Statement state = con.createStatement();
 			String sql = 
 					"insert into produto (nome, descricao) values ('Geladeira','geladeira frost free.')";

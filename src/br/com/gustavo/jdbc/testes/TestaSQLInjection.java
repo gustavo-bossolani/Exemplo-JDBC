@@ -6,7 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import br.com.gustavo.jdbc.models.Banco;
+import br.com.gustavo.jdbc.models.BancoDataSource;
 
 public class TestaSQLInjection {
 
@@ -35,7 +35,7 @@ public class TestaSQLInjection {
 
 		try {
 
-			Connection connection = Banco.getConnection();
+			Connection connection = new BancoDataSource().getConnection();
 			statementPreparado = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			statementPreparado.setString(1, nome);
 			statementPreparado.setString(2, descricao);
