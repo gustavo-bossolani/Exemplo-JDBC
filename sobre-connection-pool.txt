@@ -1,0 +1,15 @@
+
+
+Em um pool simples com 9 conexões, o que acontece quando o 10º usuário se conecta e todas estão ocupadas? 
+O que acontece quando, posteriormente, o terceiro usuário termina sua tarefa?
+
+Que variações você sugeriria fazer na implementação de um pool de conexões para evitar que um usuário espere muito tempo?
+E o que fazer para evitar que em horários de pico o servidor não fique com poucas conexões para um número grande de usuários?
+
+
+
+
+No cenário descrito, o 10º usuário esperará. Quando o terceiro usuário terminar sua tarefa, o décimo usuário passará a usar a conexão liberada.
+
+Uma sugestão seria utilizar um número variável de conexões: delimitamos um número mínimo e máximo e deixamos que o servidor se adapte com o número de conexões de acordo com a necessidade atual.
+Por exemplo podemos configurar 10 e 100. A medida que novas conexões vão sendo necessárias, o servidor cria, até chegar a 100. Quando elas não são necessárias, ele deixa diminuir o número de conexões ativas até um mínimo de 10.
