@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import br.com.gustavo.jdbc.models.Categoria;
 import br.com.gustavo.jdbc.models.Produto;
 
 public class ProdutoDAO {
@@ -46,6 +47,22 @@ public class ProdutoDAO {
 		}
 	}
 
+	
+	// Exemplo de busca com chave estrangeira, sem evitar o problema de N+1
+	
+//	public List<Produto> busca(Categoria categoria) throws SQLException{
+//		List<Produto> produtos = new ArrayList<>();
+//		String sql = "select * from Produto where categoria_id = ?";
+//		
+//		try(PreparedStatement stmt = this.con.prepareStatement(sql)){
+//			stmt.setInt(1, categoria.getId());
+//			stmt.execute();
+//			
+//			transformaResultadoEmProdutos(produtos, stmt);
+//		}
+//		return produtos;
+//	}
+	
 	public Produto buscaPorID(int id) throws SQLException {
 		
 		String sql = "select * from Produto where id = ?";
@@ -78,19 +95,22 @@ public class ProdutoDAO {
 		
 		try(PreparedStatement state = con.prepareStatement(sql)){
 			state.execute();
-			
-			try(ResultSet result = state.getResultSet()){
-				while(result.next()) {
-					int id = result.getInt("id");
-					String nome = result.getString("nome");
-					String descricao = result.getString("descricao");
-					Produto produto = new Produto(nome,descricao);
-					produto.setId(id);
-					produtos.add(produto);
-				}
-			}
+			transformaResultadoEmProdutos(produtos, state);
 		}
 		return produtos;
+	}
+
+	private void transformaResultadoEmProdutos(List<Produto> produtos, PreparedStatement state) throws SQLException {
+		try(ResultSet result = state.getResultSet()){
+			while(result.next()) {
+				int id = result.getInt("id");
+				String nome = result.getString("nome");
+				String descricao = result.getString("descricao");
+				Produto produto = new Produto(nome,descricao);
+				produto.setId(id);
+				produtos.add(produto);
+			}
+		}
 	}
 
 

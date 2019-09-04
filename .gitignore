@@ -1,6 +1,4 @@
 .idea/
 *.iml
 target/
-src/*.log
-src/*.lck
-src/*.script
+**/logs
